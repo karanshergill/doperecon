@@ -12,6 +12,11 @@ function update_resolvers() {
     echo "Fresh resolvers updated."
 }
 
+function usage() {
+    echo "Usage: $0 -dl|--domain-list <domain_list_file>"
+    exit 1
+}
+
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -dl|--domain-list)
@@ -36,10 +41,10 @@ if [[ ! -f "$DOMAIN_LIST" ]]; then
   exit 1
 fi
 
-while read -r domain; do
-    echo "Fuzzing $domain"
+while read -r DOMAIN; do
+    echo "Fuzzing $DOMAIN"
     update_resolvers
-    output_file="fuzz-result-$domain.txt"
-    puredns bruteforce "$WORDLIST" "$domain" --resolvers "$RESOLVERS" --resolvers-trusted "$TRUSTED_RESOLVERS" --write "$output_file"
-    echo "Results saved to $output_file"
+    PUREDNS_OUTPUT_FILE="fuzz-result-$DOMAIN.txt"
+    puredns bruteforce "$WORDLIST" "$DOMAIN" --resolvers "$RESOLVERS" --resolvers-trusted "$TRUSTED_RESOLVERS" --write "$PUREDNS_OUTPUT_FILE"
+    echo "Results saved to $PUREDNS_OUTPUT_FILE"
 done < "$DOMAIN_LIST"
