@@ -7,8 +7,10 @@ WORDLIST="/lists/megadns.txt"
 
 function update_resolvers() {
     echo "Updating resolvers from Github..."
+    WORKING_DIR=$(pwd)
     cd "$RESOLVERS_DIR" || exit 1
     git pull
+    cd "$WORKING_DIR" || exit 1
     echo "Fresh resolvers updated."
 }
 
