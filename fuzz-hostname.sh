@@ -1,9 +1,12 @@
 #!/bin/bash
 
+WORDLIST_DIR="/wordlists"
+WORDLIST=""
+
 RESOLVERS_DIR="/resolvers"
 RESOLVERS="$RESOLVERS_DIR/resolvers.txt"
 TRUSTED_RESOLVERS="$RESOLVERS_DIR/resolvers-trusted.txt"
-WORDLIST="/lists/megadns.txt"
+
 
 function update_resolvers() {
     echo "Updating resolvers from Github..."
@@ -15,14 +18,19 @@ function update_resolvers() {
 }
 
 function usage() {
-    echo "Usage: $0 -dl|--domain-list <domain_list_file>"
+    echo "Usage: $0 -dl|--domain-list <domain_list_file> [-wl|--wordlist <wordlist_file>]"
     exit 1
 }
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -dl|--domain-list)
-        DOMAIN_LIST="$2"
+        DOMAINLIST="$2"
+        shift
+        ;;
+        -wl|--wordlist)
+        WORDLIST_NAME="$2"
+        WORDLIST="$WORDLIST_DIR/$WORDLIST_NAME"
         shift
         ;;
     *)
@@ -33,20 +41,38 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-if [[ -z "$DOMAIN_LIST" ]]; then
+if [[ -z "$DOMAINLIST" ]]; then
   echo "Error: Domain list file not provided."
   usage
 fi
 
-if [[ ! -f "$DOMAIN_LIST" ]]; then
-  echo "Error: Domain list file '$DOMAIN_LIST' not found."
+if [[ ! -f "$DOMAINLIST" ]]; then
+  echo "Error: Domain list file '$DOMAINLIST' not found."
   exit 1
 fi
 
+if [[ -z "$WORDLIST" ]]; then
+    WORDLIST="$WORDLIST_DIR/megadns.txt"
+fi
+
+if [[ ! -f "$WORDLIST" ]]; then
+    echo "Error: Wordlist file '$WORDLIST' not found."
+    exit 1
+fi
+
+IFS=$'\n'
 while read -r DOMAIN; do
+    DOMAIN=$(echo "$DOMAIN" | xargs)
     echo "Fuzzing $DOMAIN"
     update_resolvers
     PUREDNS_OUTPUT_FILE="fuzz-result-$DOMAIN.txt"
     puredns bruteforce "$WORDLIST" "$DOMAIN" --resolvers "$RESOLVERS" --resolvers-trusted "$TRUSTED_RESOLVERS" --write "$PUREDNS_OUTPUT_FILE"
     echo "Results saved to $PUREDNS_OUTPUT_FILE"
-done < "$DOMAIN_LIST"
+    OUTPUT_FILES+=("$PUREDNS_OUTPUT_FILE")
+done < "$DOMAINLIST"
+
+echo "Processing completed. Generating report..."
+for FILE in "${OUTPUT_FILES[@]}"; do
+    DOMAIN_COUNT=$(wc -l < "$FILE")
+    echo "File: $FILE, Results: $DOMAIN_COUNT"
+done
