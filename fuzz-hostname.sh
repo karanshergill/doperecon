@@ -73,6 +73,6 @@ done < "$DOMAINLIST"
 
 echo "Processing completed. Generating report..."
 for FILE in "${OUTPUT_FILES[@]}"; do
-    DOMAIN_COUNT=$(wc -l < "$FILE")
-    echo "File: $FILE, Results: $DOMAIN_COUNT"
+    SUBDOMAIN_COUNT=$(wc -l < "$FILE")
+    echo "File: $FILE, Results: $SUBDOMAIN_COUNT"
 done
