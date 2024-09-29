@@ -1,5 +1,17 @@
 #!/bin/bash
 
+if ! command -v puredns &> /dev/null; then
+    echo "Error: puredns is not installed or not available in the system's PATH."
+    echo "Please install puredns and ensure it is accessible."
+    exit 1
+fi
+
+if ! command -v publicresolvers &> /dev/null; then
+    echo "Error: publicresolvers is not installed or not available in the system's PATH."
+    echo "Please install publicresolvers and ensure it is accessible."
+    exit 1
+fi
+
 WORDLIST_DIR="/wordlists"
 WORDLIST=""
 
