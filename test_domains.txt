@@ -1,0 +1,4 @@
+hackerone.com
+cisco.com
+bugcrowd.com
+nmap.org
