@@ -1,10 +1,11 @@
 package services
 
 import (
+	"os"
 	"fmt"
-	"dope-recon/utils"
-	"os/exec"
 	"strings"
+	"os/exec"
+	"dope-recon/utils"
 )
 
 func FuzzDomains(domainList string, wordlist string) error {
@@ -47,7 +48,10 @@ func runPureDNS(wordlist, domain, resolversFile, trustedResolversFile, outputFil
 		return fmt.Errorf("failed to run PureDNS: %v", err)
 	}
 
-	// Sort and deduplicate the output
+	// Ensure temporary file is removed after use
+	defer os.Remove(tempOutputFile)
+
+	// deduplicate the output
 	err = utils.UniqueLines(tempOutputFile, outputFile)
 	if err != nil {
 		return fmt.Errorf("error sorting output for domain %s: %v", domain, err)
