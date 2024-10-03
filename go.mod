@@ -1,4 +1,4 @@
-module dope-recon
+module github.com/karanshergill/dope-recon
 
 go 1.22.1
 
