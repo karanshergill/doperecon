@@ -48,7 +48,7 @@ func runPureDNS(wordlist, domain, resolversFile, trustedResolversFile, outputFil
 	}
 
 	// Sort and deduplicate the output
-	err = utils.SortAndUniq(tempOutputFile, outputFile)
+	err = utils.UniqueLines(tempOutputFile, outputFile)
 	if err != nil {
 		return fmt.Errorf("error sorting output for domain %s: %v", domain, err)
 	}

@@ -27,8 +27,8 @@ func LoadDomains(filePath string) ([]string, error) {
 	return domains, nil
 }
 
-// SortAndUniq reads a file, removes duplicates, sorts the lines, and writes the result to a new file.
-func SortAndUniq(inputFile, outputFile string) error {
+// UniqueLines reads a file, removes duplicates, and writes the result to a new file without sorting.
+func UniqueLines(inputFile, outputFile string) error {
 	// Open the input file
 	file, err := os.Open(inputFile)
 	if err != nil {
@@ -40,9 +40,13 @@ func SortAndUniq(inputFile, outputFile string) error {
 	uniqueLines := make(map[string]bool)
 
 	scanner := bufio.NewScanner(file)
+	var lines []string
 	for scanner.Scan() {
 		line := scanner.Text()
-		uniqueLines[line] = true
+		if !uniqueLines[line] {
+			uniqueLines[line] = true
+			lines = append(lines, line) // Keep the order of lines as they appear
+		}
 	}
 
 	// Check for scanner error
@@ -50,16 +54,7 @@ func SortAndUniq(inputFile, outputFile string) error {
 		return fmt.Errorf("error reading file %s: %v", inputFile, err)
 	}
 
-	// Convert map keys to a slice for sorting
-	lines := make([]string, 0, len(uniqueLines))
-	for line := range uniqueLines {
-		lines = append(lines, line)
-	}
-
-	// Sort the slice
-	sort.Strings(lines)
-
-	// Write the sorted unique lines to the output file
+	// Write the unique lines to the output file
 	output, err := os.Create(outputFile)
 	if err != nil {
 		return fmt.Errorf("error creating file %s: %v", outputFile, err)
