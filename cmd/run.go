@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"log"
-	"dope-recon/services"
-	"dope-recon/utils"
+	
+	"github.com/karanshergill/dope-recon/services"
+	"github.com/karanshergill/dope-recon/utils"
 
 	"github.com/spf13/cobra"
 )

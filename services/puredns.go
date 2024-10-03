@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 	"os/exec"
-	"dope-recon/utils"
+	"github.com/karanshergill/dope-recon/utils"
 )
 
 func FuzzDomains(domainList string, wordlist string) error {
