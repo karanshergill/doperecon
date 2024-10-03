@@ -1,8 +1,6 @@
 module github.com/karanshergill/dope-recon
 
-
 go 1.22.1
-
 
 require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
