@@ -9,7 +9,8 @@ import (
 )
 
 func FuzzDomains(domainList string, wordlist string) error {
-	// Load domains from the domain list
+	
+	// load domains from file
 	domains, err := utils.LoadDomains(domainList)
 	if err != nil {
 		return fmt.Errorf("error loading domain list: %v", err)
@@ -21,8 +22,8 @@ func FuzzDomains(domainList string, wordlist string) error {
 			continue
 		}
 
-		// Update resolvers
-		utils.UpdateResolvers()
+		// generate and update resolvers
+		utils.GenerateResolvers()
 
 		// Execute PureDNS for each domain
 		outputFile := fmt.Sprintf("fuzz-result-%s.txt", domain)

@@ -6,8 +6,8 @@ import (
 	"os/exec"
 )
 
-// UpdateResolvers generates the resolver and trusted resolver files using publicresolvers
-func UpdateResolvers() {
+// generate the resolver and trusted resolver files using publicresolvers
+func GenerateResolvers() {
 	resolversFile := "resolvers.txt"
 	trustedResolversFile := "trusted_resolvers.txt"
 
