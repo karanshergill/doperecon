@@ -1,6 +1,6 @@
 package main
 
-import "github.com/karanshergill/dope-recon/cmd"
+import "github.com/karanshergill/doperecon/cmd"
 
 func main() {
 	cmd.Execute()

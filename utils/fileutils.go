@@ -3,13 +3,14 @@ package utils
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 )
 
 func LoadDomains(filePath string) ([]string, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
-		return nil, fmt.Errorf("error opening domain list file: %v", err)
+		return nil, fmt.Errorf("Error opening file: %v", err)
 	}
 	defer file.Close()
 
