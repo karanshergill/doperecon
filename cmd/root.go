@@ -1,7 +1,3 @@
-/*
-Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
-*/
 package cmd
 
 import (
@@ -15,9 +11,9 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "dope-recon",
-	Short: "Dope Recon is a open-source domain and subdomain recon tool for bug bounty hunters.",
-	Long: `A wrapper around industry standard efficient recon tools used my most bug bounty hunters.
+	Use:   "doperecon",
+	Short: "Dope Recon is an open-source comprehensive recon and ASM framework for bug bounty hunters",
+	Long: `A wrapper around industry standard efficient recon tools used my most bug bounty hunters. doperecon is a tool for automating reconnaissance and asset management, helping bug bounty hunters discover and analyze targets.
 	Caution!
 	This tool uses both active and passive recon techniques.`,
 	
@@ -28,8 +24,8 @@ var rootCmd = &cobra.Command{
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 func Execute() {
-	err := rootCmd.Execute()
-	if err != nil {
+	err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
 		os.Exit(1)
 	}
 }
