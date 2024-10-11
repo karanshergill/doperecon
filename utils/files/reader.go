@@ -1,19 +1,20 @@
-package utils
+// Uses a goroutine to read the file line by line and emits each line of 
+// the file as a string through the channel
+
+package files
 
 import (
 	"bufio"
 	"fmt"
 	"log"
 	"os"
-
-	"doperecon/files"
 )
 
 // ReadFile returns a channel that emits each line from the file as a string
 func ReadFile(filePath string) (<-chan string, error) {
 
 	// Check file exists
-	if !utils.FileExists(filePath) {
+	if !FileExists(filePath) {
         return nil, fmt.Errorf("File does not exist: %s", filePath)
     }
 

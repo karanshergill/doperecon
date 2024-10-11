@@ -1,6 +1,6 @@
 package main
 
-import "github.com/karanshergill/doperecon/cmd"
+import "doperecon/cmd"
 
 func main() {
 	cmd.Execute()

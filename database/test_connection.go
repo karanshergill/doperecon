@@ -1,17 +1,10 @@
-package main
+package database
 
 import (
-    "fmt"
-
-    "doperecon/database"
+    "testing"
 )
 
-func main() {
-    fmt.Println("Testing database connection...")
-
-    // Initialize the database connection
-    database.InitDB()
-    defer database.CloseDB()
-
-    fmt.Println("Database connection test successful!")
+func TestConnection(t *testing.T) {
+    InitDB()
+    defer CloseDB()
 }
