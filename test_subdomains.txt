@@ -1,4 +1,0 @@
-api.hackerone.com
-test-dev.api.hackerone.com
-stg.local.api.hackerone.com
-data.dev.test.hackerone.com
